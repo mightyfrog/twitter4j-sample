@@ -44,7 +44,7 @@ public class OAuthActivity extends AppCompatActivity implements Const {
      *
      */
     private void oauth() {
-        Single<String> s = Single.create(new SingleOnSubscribe<String>() {
+        Single.create(new SingleOnSubscribe<String>() {
             @Override
             public void subscribe(@NonNull SingleEmitter<String> emitter) throws Exception {
                 mOAuth = new OAuthAuthorization(ConfigurationContext.getInstance());
@@ -52,12 +52,11 @@ public class OAuthActivity extends AppCompatActivity implements Const {
                 mRequestToken = mOAuth.getOAuthRequestToken(CALLBACK_URL);
                 emitter.onSuccess(mRequestToken.getAuthorizationURL());
             }
-        });
-        s.subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .subscribe(new DisposableSingleObserver<String>() {
                     @Override
-                    public void onSuccess(@NonNull String s) {
-                        openChromeCustomTab(s);
+                    public void onSuccess(@NonNull String url) {
+                        openChromeCustomTab(url);
                     }
 
                     @Override
@@ -73,6 +72,8 @@ public class OAuthActivity extends AppCompatActivity implements Const {
      */
     private void getAccessToken(final Uri uri) {
         if (uri == null) {
+            setResult(RESULT_CANCELED);
+            finish();
             return;
         }
 

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements Const {
                     AccessToken token = (AccessToken) data.getSerializableExtra(ACCESS_TOKEN);
                     android.util.Log.e(TAG, token.getToken());
                     android.util.Log.e(TAG, token.getTokenSecret());
-                    test(token);
+                    searchTest(token);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Const {
     /**
      * @param accessToken The access token.
      */
-    private void test(AccessToken accessToken) {
+    private void searchTest(AccessToken accessToken) {
         if (accessToken == null) {
             return;
         }
